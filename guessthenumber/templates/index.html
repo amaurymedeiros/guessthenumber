@@ -7,13 +7,16 @@
     <script type=text/javascript src="{{ url_for('static', filename='guess.js') }}"></script>
   </head>
   <body>
-    <div>
-      <input type="text" id="guess">
-      <button type="button" onclick="guessNumber({{ xor(secret) }})">Guess!</button>
+    <div id="game">
+      <div>
+        <input type="text" id="guess">
+        <button type="button" onclick="guessNumber({{ xor(secret) }})">Guess!</button>
+      </div>
+      <div id="result"></div>
+      <div>
+        <p>White pins: right number, wrong position. Black pins: right number, right position.</p>
+      </div>
     </div>
-    <div id="result"></div>
-    <div>
-      <p>White pins: right number, wrong position. Black pins: right number, right position.</p>
-    </div>
+    <a id="try_again" style="display:none;" href="/">Play Again</a>
   </body>
 </html>

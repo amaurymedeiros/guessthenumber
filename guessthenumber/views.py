@@ -1,8 +1,7 @@
-from random import shuffle
+from flask import jsonify, render_template, request
 
-from flask import render_template, request
-
-from . import app, xor, MASK
+from . import app, xor
+from utils import calculate_score, get_random_number
 
 secret_number = 0
 guesses = []
@@ -14,15 +13,10 @@ def home():
 
 @app.route('/guess_number', methods=['POST'])
 def guess_number():
-    secret = int(request.form.get('encrypted')) ^ MASK
+    secret = xor(int(request.form.get('encrypted')))
     guess = int(request.form.get('guess'))
-    return ""
+    return jsonify(calculate_score(secret, guess))
 
 def _set_secret_number():
     global secret_number
-    secret_number = _get_random_number()
-
-def _get_random_number():
-    numbers = list('1234567890')
-    shuffle(numbers)
-    return int(''.join(numbers[:4]))
+    secret_number = get_random_number()
